@@ -47,7 +47,7 @@ public static class Pack
                 //int randomIndex = _random.Next(cardsLeft) 
                 Card? card1 = _cards[i];
                 // BUG I think this needs to be shifted to stop empty parts of the pack being shuffled?
-                int position =_random.Next(end - start);
+                int position =_random.Next(end - start) + start;
                 Card? card2 = _cards[position];
                 _cards[i] = card2;
                 _cards[position] = card1;
@@ -58,20 +58,18 @@ public static class Pack
         }
 
         // Riffle could implement random slices of cards rather than being perfect?
-        // Riffle should actually cut the pack then intersect. 
         bool Riffle()
         {
             int cardsLeft = CardsRemaining();
-            // Not sure about indexing again?
-            int end = _cards.Length -1;
-            int start = end - cardsLeft;
-            // i+2 not allowed could use i++ twice?
-            for (int i = start; i < end; i++)
+            int firstSplitStart = _cards.Length - cardsLeft - 1;
+            int secondSplitStart = cardsLeft / 2 + (_cards.Length - cardsLeft);
+            // TODO not sure about indexing again
+            for (int i = 0; i < cardsLeft / 2; i++)
             {
-                Card? card1 = _cards[i];
-                Card? card2 = _cards[i + 1];
-                _cards[i] = card2;
-                _cards[i + 1] = card1;
+                Card? card1 = _cards[firstSplitStart + i];
+                Card? card2 = _cards[secondSplitStart + i];
+                _cards[firstSplitStart + i] = card2;
+                _cards[secondSplitStart + i] = card1;
                 i++;
             }
             return true;

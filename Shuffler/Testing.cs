@@ -11,7 +11,7 @@ public static class Testing
     public static void TestShuffle()
     {
         Console.WriteLine(Pack.ShuffleCardPack(1));
-        Console.WriteLine(Pack.ShuffleCardPack(2));
+        //Console.WriteLine(Pack.ShuffleCardPack(2));
         Console.WriteLine(Pack.ShuffleCardPack(3));
         Console.WriteLine(Pack.ShuffleCardPack(4));
     }
