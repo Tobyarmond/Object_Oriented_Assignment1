@@ -4,9 +4,19 @@
 public static class Pack
 {
     private static Card?[] _cards = new Card?[52];
-    // Is it a good idea to have an instance of Random attached to the class?
     private static Random _random = new Random();
 
+    /// <summary>
+    /// Interface for cards within the pack. Read-Only
+    /// </summary>
+    public static Card?[] Cards
+    {
+        get => _cards;
+    }
+
+    /// <summary>
+    /// Pack Constructor. Automatically creates a full deck of 52 cards.
+    /// </summary>
     static Pack()
     {
         int index = 0;
@@ -20,58 +30,64 @@ public static class Pack
         }
     }
 
-    public static Card?[] Cards
-    {
-        get => _cards;
-    }
 
-    // Cards remaining made public as may be useful for other classes to access.
+    /// <summary>
+    /// Counts number of cards left in the deck (ignores null positions within the deck array)
+    /// </summary>
+    /// <returns>int - Cards left in the deck</returns>
     public static int CardsRemaining()
     {
-        return _cards.Count(s => s != null);
+        return _cards.Count(card => card != null);
     }
     
-    // Spec asks for return value to be a bool.
-    // Bool return true has been used to symbolise that the int handed to method was a legal value. 
+    /// <summary>
+    /// Shuffles the cards within the pack. Empty parts of the pack are ignored. Shuffle types are local methods. Fisher
+    /// yates iterates over the pack swapping with another random card within the part not yet iterated over. Riffle
+    /// interlaces two halves of the pack.
+    /// </summary>
+    /// <param name="shuffleType">int used to select shuffle type 1 = Fisher yates, 2 = Riffle 3 = None </param>
+    /// <returns>Bool returns True if a valid shuffle has been selected (1-3) returns False otherwise</returns>
     public static bool ShuffleCardPack(int shuffleType)
     {
         bool FisherYates()
         {
-            // Could be made a static value as a pack of cards is 52 cards. But left dynamic for possible future changes.
-            int end = _cards.Length - 1;
             int cardsLeft = CardsRemaining();
-            // Not sure about this indexing?
-            int start = end + 1 - cardsLeft;
-            for (int i = end; i > start; i--)
+            if (cardsLeft > 0)
             {
-                //int randomIndex = _random.Next(cardsLeft) 
-                Card? card1 = _cards[i];
-                // BUG I think this needs to be shifted to stop empty parts of the pack being shuffled?
-                int position =_random.Next(end - start) + start;
-                Card? card2 = _cards[position];
-                _cards[i] = card2;
-                _cards[position] = card1;
-                // TODO Don't think I need this line
-                //start++;
+                int end = _cards.Length - 1;
+                int start = end + 1 - cardsLeft;
+                for (int i = end; i > start; i--)
+                {
+                    Card? card1 = _cards[i];
+                    int position =_random.Next(end - start) + start;
+                    Card? card2 = _cards[position];
+                    _cards[i] = card2;
+                    _cards[position] = card1;
+                }
             }
+            // Even if pack is empty this will return true because it is a legal value of shuffle requested
             return true;
         }
 
-        // Riffle could implement random slices of cards rather than being perfect?
+        // Riffle could implement random split of cards rather than being perfect?
+        // Could just create two lists to simulate the riffle but this is more resource intensive than current implementation
         bool Riffle()
         {
             int cardsLeft = CardsRemaining();
-            int firstSplitStart = _cards.Length - cardsLeft - 1;
-            int secondSplitStart = cardsLeft / 2 + (_cards.Length - cardsLeft);
-            // TODO not sure about indexing again
-            for (int i = 0; i < cardsLeft / 2; i++)
+            if (cardsLeft > 0)
             {
-                Card? card1 = _cards[firstSplitStart + i];
-                Card? card2 = _cards[secondSplitStart + i];
-                _cards[firstSplitStart + i] = card2;
-                _cards[secondSplitStart + i] = card1;
-                i++;
+                int firstSplitStart = _cards.Length - cardsLeft - 1;
+                int secondSplitStart = cardsLeft / 2 + (_cards.Length - cardsLeft);
+                for (int i = 0; i < cardsLeft / 2; i++)
+                {
+                    Card? card1 = _cards[firstSplitStart + i];
+                    Card? card2 = _cards[secondSplitStart + i];
+                    _cards[firstSplitStart + i] = card2;
+                    _cards[secondSplitStart + i] = card1;
+                    i++;
+                }
             }
+            // Even if pack is empty this will return true because it is a legal value of shuffle requested
             return true;
         }
 
@@ -90,7 +106,11 @@ public static class Pack
         return false;
     }
 
-    // TODO need to make all usages ready for possible null reference return
+    /// <summary>
+    /// Returns the Card on the top of the pack. If pack is empty a Card{null} will be returned. Usages should be prepared
+    /// for null types or should check size of pack using CardsRemaining() before using.
+    /// </summary>
+    /// <returns>Card or Card{null}</returns>
     public static Card? Deal()
     {
         for (int i = 0; i < _cards.Length; i++)
@@ -107,7 +127,13 @@ public static class Pack
         return null;
     }
 
-    // TODO hand dealt has possible null references within it. all usages should be prepared for null types
+    /// <summary>
+    /// Deals a number of cards from the top of the pack. If not enough cards in the pack List of Cards will contain
+    /// Card{null}. Usages should be prepared for null types or should check the size of the pack using CardsRemaining()
+    /// before using.
+    /// </summary>
+    /// <param name="amount">int - Number of cards to be dealt</param>
+    /// <returns>List - Containing cards dealt</returns>
     public static List<Card?> DealCard(int amount)
     {
         // List is instantiated at size requested. If not enough cards left in pack some of list will contain null.
@@ -120,7 +146,6 @@ public static class Pack
             amount = cardsLeft;
         }
         int cardsDealt = 0;
-        // TODO not sure about this condition?
         for (int i = 0; cardsDealt <= amount; i++,cardsDealt++)
         {
             if (_cards[i] != null)

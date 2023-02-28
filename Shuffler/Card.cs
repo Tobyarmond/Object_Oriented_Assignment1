@@ -8,24 +8,37 @@ public class Card
     private int _suit;
     private int _value;
 
+    /// <summary>
+    /// Interface for Card suit. Read-Only
+    /// </summary>
     public int Suit
     {
         get => _suit;
-        //set => _suit = value;
     }
-
+    /// <summary>
+    /// Interface for Card value. Read-Only
+    /// </summary>
     public int Value
     {
-        get => _value; 
-        //set => _value = value;
+        get => _value;
     }
 
+    /// <summary>
+    /// Card constructor
+    /// </summary>
+    /// <param name="suit">int - integer value representing suit. 1 = Spades, 2 = Clubs, 3 = Hearts, 4 =  Diamonds</param>
+    /// <param name="value">int - integer value representing Card value. 1 = Ace, 2-10 = Number, 11 = Jack, 12 = Queen,
+    /// 13 = King</param>
     public Card(int suit, int value)
     {
         _suit = suit;
         _value = value;
     }
-    // TODO Would like a better way of doing this.
+    /// <summary>
+    /// Returns a string representing the card in the format value of suit 
+    /// </summary>
+    /// <returns>string - value of suit</returns>
+    // TODO Would like a better way of doing this. Could override .asString method?
     public string CardAsString()
     {
         string output = "";
