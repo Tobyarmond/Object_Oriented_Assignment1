@@ -1,8 +1,15 @@
 ﻿using Shuffler;
-Testing.OutputPack();
+
+// Encoding changed to allow for card symbols
+Console.OutputEncoding = System.Text.Encoding.UTF8;
+Pack.OutputPack();
+// New line for readability
 Console.WriteLine();
 Testing.TestDeal();
-Testing.OutputPack();
+// New line for readability
+Console.WriteLine();
+Pack.OutputPack();
+// New line for readability
 Console.WriteLine();
 Testing.TestShuffle();
-Testing.OutputPack();
+Pack.OutputPack();

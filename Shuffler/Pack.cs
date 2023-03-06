@@ -1,6 +1,7 @@
 ﻿namespace Shuffler;
 
 // Top of pack is index 0 this is because foreach starts at index 0 to make other features added later easier.
+// TODO needs an AddCard() method as top of the pack moves as cards are emptied from it. Can be quite simply done by iterating
 public static class Pack
 {
     private static Card?[] _cards = new Card?[52];
@@ -30,7 +31,6 @@ public static class Pack
         }
     }
 
-
     /// <summary>
     /// Counts number of cards left in the deck (ignores null positions within the deck array)
     /// </summary>
@@ -59,11 +59,16 @@ public static class Pack
                 for (int i = end; i > start; i--)
                 {
                     Card? card1 = _cards[i];
+                    // BUG I think this random value needs to get smaller or something
                     int position =_random.Next(end - start) + start;
                     Card? card2 = _cards[position];
                     _cards[i] = card2;
                     _cards[position] = card1;
                 }
+            }
+            else
+            {
+                PackEmptyMessage();
             }
             // Even if pack is empty this will return true because it is a legal value of shuffle requested
             return true;
@@ -86,6 +91,10 @@ public static class Pack
                     _cards[secondSplitStart + i] = card1;
                     i++;
                 }
+            }
+            else
+            {
+                PackEmptyMessage();
             }
             // Even if pack is empty this will return true because it is a legal value of shuffle requested
             return true;
@@ -113,6 +122,10 @@ public static class Pack
     /// <returns>Card or Card{null}</returns>
     public static Card? Deal()
     {
+        if (CardsRemaining() <= 0)
+        {
+            PackEmptyMessage();
+        }
         for (int i = 0; i < _cards.Length; i++)
         {
             if (_cards[i] != null)
@@ -141,6 +154,10 @@ public static class Pack
         
         // If amount requested is larger than cards left in the pack reduce size to be dealt to number left in pack
         int cardsLeft = CardsRemaining();
+        if (cardsLeft <= 0)
+        {
+            PackEmptyMessage();
+        }
         if (amount > cardsLeft)
         {
             amount = cardsLeft;
@@ -155,5 +172,24 @@ public static class Pack
             }
         }
         return dealt;
+    }
+    
+    /// <summary>
+    /// Iterates over the pack and prints all non-null Cards remaining.
+    /// </summary>
+    public static void OutputPack()
+    {
+        foreach (Card? card in Pack.Cards)
+        {
+            if (card != null)
+            {
+                Console.WriteLine(card.CardAsString());    
+            }
+        }
+    }
+
+    private static void PackEmptyMessage()
+    {
+        throw new Exception("There are no cards left in the pack!");
     }
 }

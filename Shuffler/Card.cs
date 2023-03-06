@@ -2,7 +2,6 @@
 
 // Card class using int to represent suit and value
 // values start at 1 not 0 for both suit and value
-// TODO implement string representation of suit and value.
 public class Card 
 {
     private int _suit;
@@ -90,16 +89,20 @@ public class Card
         switch (_suit)
         {
             case 1:
-                output += "Spades";
+                // Spades
+                output += "\u2660";
                 break;
             case 2:
-                output += "Clubs";
+                // Clubs
+                output += "\u2663";
                 break;
             case 3:
-                output += "Hearts";
+                // Hearts
+                output += "\u2665";
                 break;
             case 4:
-                output += "Diamonds";
+                // Diamonds
+                output += "\u2666";
                 break;
         }
 

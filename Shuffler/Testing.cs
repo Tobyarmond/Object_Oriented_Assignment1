@@ -2,17 +2,14 @@
 public static class Testing
 {
     /// <summary>
-    /// Deals a number of Cards. 6 Cards are dealt, and output to the console. Cards are lost after being dealt
+    /// Deals a number of Cards. 6 Cards are dealt, and output to the console.
     /// </summary>
     public static void TestDeal()
     {
-        Card? test = Pack.Deal();
-        List<Card?> testHand = Pack.DealCard(5);
-        Console.WriteLine(test?.CardAsString());
-        foreach (Card? c in testHand)
-        {
-            Console.WriteLine(c?.CardAsString());
-        }
+        Player player1 = new Player("player1");
+        player1.Hand.Add(Pack.Deal());
+        player1.Hand.AddRange(Pack.DealCard(5));
+        player1.OutputHand();
     }
 
     /// <summary>
@@ -24,19 +21,5 @@ public static class Testing
         Console.WriteLine(Pack.ShuffleCardPack(2));
         Console.WriteLine(Pack.ShuffleCardPack(3));
         Console.WriteLine(Pack.ShuffleCardPack(4));
-    }
-
-    /// <summary>
-    /// Iterates over the pack and prints all non-null Cards remaining.
-    /// </summary>
-    public static void OutputPack()
-    {
-        foreach (Card? card in Pack.Cards)
-        {
-            if (card != null)
-            {
-                Console.WriteLine(card.CardAsString());    
-            }
-        }
     }
 }
