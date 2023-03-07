@@ -4,9 +4,12 @@
 // values start at 1 not 0 for both suit and value
 public class Card 
 {
+    // This is an example of ENCAPSULATION
     private int _suit;
+    // This is an example of ENCAPSULATION
     private int _value;
 
+    // Interface is an example of ENCAPSULATION
     /// <summary>
     /// Interface for Card suit. Read-Only
     /// </summary>
@@ -14,6 +17,7 @@ public class Card
     {
         get => _suit;
     }
+    // Interface is an example of ENCAPSULATION
     /// <summary>
     /// Interface for Card value. Read-Only
     /// </summary>
@@ -37,8 +41,7 @@ public class Card
     /// Returns a string representing the card in the format value of suit 
     /// </summary>
     /// <returns>string - value of suit</returns>
-    // TODO Would like a better way of doing this. Could override .asString method?
-    public string CardAsString()
+    public override string ToString()
     {
         string output = "";
         switch (_value)
@@ -90,24 +93,21 @@ public class Card
         {
             case 1:
                 // Spades
-                output += "\u2660";
+                output += "Spades \u2660";
                 break;
             case 2:
                 // Clubs
-                output += "\u2663";
+                output += "Clubs \u2663";
                 break;
             case 3:
                 // Hearts
-                output += "\u2665";
+                output += "Hearts \u2665";
                 break;
             case 4:
                 // Diamonds
-                output += "\u2666";
+                output += "Diamonds \u2666";
                 break;
         }
-
         return output;
     }
-
-    
 }

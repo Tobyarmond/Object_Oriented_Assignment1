@@ -1,8 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "4T18m25MrSSAHs7i6iywopN0A8FWiMM2mYq2KzgdSGvIAuH0OKpfrVCCOEibIrGHfT5Ao2QXOcjFDo+pmZKgJw==",
+  "dgSpecHash": "J9CxRWcVxaKpv9aCBPLzi/dQADx3qhXDEhGWRrGbRJO8KEYqDeOCNIrNchARDLyMXWVWuVK/O/E+PqaPLkKR7A==",
   "success": true,
-  "projectFilePath": "C:\\Users\\armon\\RiderProjects\\Object_Orientated_Assignments\\Shuffler\\Shuffler.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "C:\\Users\\armon\\RiderProjects\\Object_Oriented_Assignment1\\Shuffler\\Shuffler.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\armon\\.nuget\\packages\\microsoft.netcore.app.ref\\6.0.14\\microsoft.netcore.app.ref.6.0.14.nupkg.sha512",
+    "C:\\Users\\armon\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.14\\microsoft.windowsdesktop.app.ref.6.0.14.nupkg.sha512",
+    "C:\\Users\\armon\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\6.0.14\\microsoft.aspnetcore.app.ref.6.0.14.nupkg.sha512",
+    "C:\\Users\\armon\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\6.0.14\\microsoft.netcore.app.host.win-x64.6.0.14.nupkg.sha512"
+  ],
   "logs": []
 }

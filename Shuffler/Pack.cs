@@ -4,6 +4,7 @@
 // TODO needs an AddCard() method as top of the pack moves as cards are emptied from it. Can be quite simply done by iterating
 public static class Pack
 {
+    // This is an example of encapsulation
     private static Card?[] _cards = new Card?[52];
     private static Random _random = new Random();
 
@@ -112,6 +113,7 @@ public static class Pack
         {
             return true;
         }
+        // Returns a false if a non legal integer was passed to the method
         return false;
     }
 
@@ -183,7 +185,7 @@ public static class Pack
         {
             if (card != null)
             {
-                Console.WriteLine(card.CardAsString());    
+                Console.WriteLine(card.ToString());    
             }
         }
     }
@@ -191,5 +193,21 @@ public static class Pack
     private static void PackEmptyMessage()
     {
         throw new Exception("There are no cards left in the pack!");
+    }
+
+    /// <summary>
+    /// Adds a card to the top of the pack
+    /// </summary>
+    /// <param name="card">Card - Card to be added to Pack</param>
+    // TODO this could be full? Although the Card would have been generated outside of pack for this to happen?
+    public static void AddCard(Card card)
+    {
+        for (int i = _cards.Length; i > 0; i--)
+        {
+            if (_cards[i] == null)
+            {
+                _cards[i] = card;
+            }
+        }
     }
 }
