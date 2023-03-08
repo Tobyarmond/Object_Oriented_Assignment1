@@ -2,31 +2,48 @@
 
 // Card class using int to represent suit and value
 // values start at 1 not 0 for both suit and value
-// TODO implement string representation of suit and value.
 public class Card 
 {
+    // This is an example of ENCAPSULATION
     private int _suit;
+    // This is an example of ENCAPSULATION
     private int _value;
 
+    // Interface is an example of ENCAPSULATION
+    /// <summary>
+    /// Interface for Card suit. Read-Only
+    /// </summary>
     public int Suit
     {
         get => _suit;
-        //set => _suit = value;
     }
-
+    // Interface is an example of ENCAPSULATION
+    /// <summary>
+    /// Interface for Card value. Read-Only
+    /// </summary>
     public int Value
     {
-        get => _value; 
-        //set => _value = value;
+        get => _value;
     }
 
+    /// <summary>
+    /// Card constructor
+    /// </summary>
+    /// <param name="suit">int - integer value representing suit. 1 = Spades, 2 = Clubs, 3 = Hearts, 4 =  Diamonds</param>
+    /// <param name="value">int - integer value representing Card value. 1 = Ace, 2-10 = Number, 11 = Jack, 12 = Queen,
+    /// 13 = King</param>
     public Card(int suit, int value)
     {
         _suit = suit;
         _value = value;
     }
-    // TODO Would like a better way of doing this.
-    public string CardAsString()
+    
+    // ADDITIONAL METHOD
+    /// <summary>
+    /// Returns a string representing the card in the format value of suit. Includes suit symbol with UTF-8 character
+    /// </summary>
+    /// <returns>string - value of suit</returns>
+    public override string ToString()
     {
         string output = "";
         switch (_value)
@@ -71,27 +88,26 @@ public class Card
                 output += "King";
                 break;
         }
-
         output += " of ";
-
         switch (_suit)
         {
             case 1:
-                output += "Spades";
+                // Spades
+                output += "Spades \u2660";
                 break;
             case 2:
-                output += "Clubs";
+                // Clubs
+                output += "Clubs \u2663";
                 break;
             case 3:
-                output += "Hearts";
+                // Hearts
+                output += "Hearts \u2665";
                 break;
             case 4:
-                output += "Diamonds";
+                // Diamonds
+                output += "Diamonds \u2666";
                 break;
         }
-
         return output;
     }
-
-    
 }
