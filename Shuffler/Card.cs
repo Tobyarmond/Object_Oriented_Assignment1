@@ -37,8 +37,10 @@ public class Card
         _suit = suit;
         _value = value;
     }
+    
+    // ADDITIONAL METHOD
     /// <summary>
-    /// Returns a string representing the card in the format value of suit 
+    /// Returns a string representing the card in the format value of suit. Includes suit symbol with UTF-8 character
     /// </summary>
     /// <returns>string - value of suit</returns>
     public override string ToString()
@@ -86,9 +88,7 @@ public class Card
                 output += "King";
                 break;
         }
-
         output += " of ";
-
         switch (_suit)
         {
             case 1:

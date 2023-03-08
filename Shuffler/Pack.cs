@@ -1,12 +1,11 @@
 ﻿namespace Shuffler;
 
-// Top of pack is index 0 this is because foreach starts at index 0 to make other features added later easier.
-// TODO needs an AddCard() method as top of the pack moves as cards are emptied from it. Can be quite simply done by iterating
 public static class Pack
 {
-    // This is an example of encapsulation
+    // This is an example of ENCAPSULATION
+    // Top of pack is index 0 this is because foreach starts at index 0 to make other features added later easier.
     private static Card?[] _cards = new Card?[52];
-    private static Random _random = new Random();
+    private static Random _random = new();
 
     /// <summary>
     /// Interface for cards within the pack. Read-Only
@@ -44,7 +43,8 @@ public static class Pack
     /// <summary>
     /// Shuffles the cards within the pack. Empty parts of the pack are ignored. Shuffle types are local methods. Fisher
     /// yates iterates over the pack swapping with another random card within the part not yet iterated over. Riffle
-    /// interlaces two halves of the pack.
+    /// interlaces two halves of the pack. Both shuffling methods have been created in such a way that that they allow
+    /// for shuffling an incomplete pack.
     /// </summary>
     /// <param name="shuffleType">int used to select shuffle type 1 = Fisher yates, 2 = Riffle 3 = None </param>
     /// <returns>Bool returns True if a valid shuffle has been selected (1-3) returns False otherwise</returns>
@@ -57,21 +57,23 @@ public static class Pack
             {
                 int end = _cards.Length - 1;
                 int start = end + 1 - cardsLeft;
+                // j reduces size of random number generated as it goes through the pack to prevent switching with
+                // already shuffled cards
+                int j = 0;
                 for (int i = end; i > start; i--)
                 {
                     Card? card1 = _cards[i];
-                    // BUG I think this random value needs to get smaller or something
-                    int position =_random.Next(end - start) + start;
+                    int position =_random.Next(end - start - j) + start ;
                     Card? card2 = _cards[position];
                     _cards[i] = card2;
                     _cards[position] = card1;
+                    j++;
                 }
             }
             else
             {
-                PackEmptyMessage();
+                PackEmptyException();
             }
-            // Even if pack is empty this will return true because it is a legal value of shuffle requested
             return true;
         }
 
@@ -79,10 +81,10 @@ public static class Pack
         // Could just create two lists to simulate the riffle but this is more resource intensive than current implementation
         bool Riffle()
         {
-            int cardsLeft = CardsRemaining();
+            int cardsLeft = CardsRemaining()-1;
             if (cardsLeft > 0)
             {
-                int firstSplitStart = _cards.Length - cardsLeft - 1;
+                int firstSplitStart = _cards.Length - cardsLeft;
                 int secondSplitStart = cardsLeft / 2 + (_cards.Length - cardsLeft);
                 for (int i = 0; i < cardsLeft / 2; i++)
                 {
@@ -93,11 +95,14 @@ public static class Pack
                     i++;
                 }
             }
+            else if (CardsRemaining() == 0)
+            {
+                PackEmptyException();
+            }
             else
             {
-                PackEmptyMessage();
+                throw new Exception("There is only 1 card left in the pack");
             }
-            // Even if pack is empty this will return true because it is a legal value of shuffle requested
             return true;
         }
 
@@ -126,7 +131,7 @@ public static class Pack
     {
         if (CardsRemaining() <= 0)
         {
-            PackEmptyMessage();
+            PackEmptyException();
         }
         for (int i = 0; i < _cards.Length; i++)
         {
@@ -158,7 +163,7 @@ public static class Pack
         int cardsLeft = CardsRemaining();
         if (cardsLeft <= 0)
         {
-            PackEmptyMessage();
+            PackEmptyException();
         }
         if (amount > cardsLeft)
         {
@@ -176,6 +181,7 @@ public static class Pack
         return dealt;
     }
     
+    // ADDITIONAL METHOD
     /// <summary>
     /// Iterates over the pack and prints all non-null Cards remaining.
     /// </summary>
@@ -190,16 +196,31 @@ public static class Pack
         }
     }
 
-    private static void PackEmptyMessage()
+    // ADDITIONAL METHOD
+    /// <summary>
+    /// Throws a general exception if the pack is empty
+    /// </summary>
+    /// <exception cref="Exception">There are no cards left in the pack!</exception>
+    private static void PackEmptyException()
     {
         throw new Exception("There are no cards left in the pack!");
     }
 
+    // ADDITIONAL METHOD
     /// <summary>
-    /// Adds a card to the top of the pack
+    /// Throws a general exception if the pack is full
+    /// </summary>
+    /// <exception cref="Exception">The pack is already full!</exception>
+    private static void PackFullException()
+    {
+        throw new Exception("The pack is already full!");
+    }
+
+    // ADDITIONAL METHOD
+    /// <summary>
+    /// Adds a card to the top of the pack. Required because pack uses an array instead of a list
     /// </summary>
     /// <param name="card">Card - Card to be added to Pack</param>
-    // TODO this could be full? Although the Card would have been generated outside of pack for this to happen?
     public static void AddCard(Card card)
     {
         for (int i = _cards.Length; i > 0; i--)
@@ -207,7 +228,10 @@ public static class Pack
             if (_cards[i] == null)
             {
                 _cards[i] = card;
+                return;
             }
         }
+        // If there are no spaces to put the card
+        PackFullException();
     }
 }
