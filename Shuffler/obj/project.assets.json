@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\armon\\RiderProjects\\Object_Orientated_Assignments\\Shuffler\\Shuffler.csproj",
+      "projectUniqueName": "C:\\Users\\armon\\RiderProjects\\Object_Oriented_Assignment1\\Shuffler\\Shuffler.csproj",
       "projectName": "Shuffler",
-      "projectPath": "C:\\Users\\armon\\RiderProjects\\Object_Orientated_Assignments\\Shuffler\\Shuffler.csproj",
+      "projectPath": "C:\\Users\\armon\\RiderProjects\\Object_Oriented_Assignment1\\Shuffler\\Shuffler.csproj",
       "packagesPath": "C:\\Users\\armon\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\armon\\RiderProjects\\Object_Orientated_Assignments\\Shuffler\\obj\\",
+      "outputPath": "C:\\Users\\armon\\RiderProjects\\Object_Oriented_Assignment1\\Shuffler\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

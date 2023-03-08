@@ -46,9 +46,9 @@ public static class Pack
     /// interlaces two halves of the pack. Both shuffling methods have been created in such a way that that they allow
     /// for shuffling an incomplete pack.
     /// </summary>
-    /// <param name="shuffleType">int used to select shuffle type 1 = Fisher yates, 2 = Riffle 3 = None </param>
+    /// <param name="typeOfShuffle">int used to select shuffle type 1 = Fisher yates, 2 = Riffle 3 = None </param>
     /// <returns>Bool returns True if a valid shuffle has been selected (1-3) returns False otherwise</returns>
-    public static bool ShuffleCardPack(int shuffleType)
+    public static bool ShuffleCardPack(int typeOfShuffle)
     {
         bool FisherYates()
         {
@@ -76,8 +76,7 @@ public static class Pack
             }
             return true;
         }
-
-        // Riffle could implement random split of cards rather than being perfect?
+        
         // Could just create two lists to simulate the riffle but this is more resource intensive than current implementation
         bool Riffle()
         {
@@ -106,15 +105,15 @@ public static class Pack
             return true;
         }
 
-        if (shuffleType == 1)
+        if (typeOfShuffle == 1)
         {
             return FisherYates();
         }
-        if (shuffleType == 2)
+        if (typeOfShuffle == 2)
         {
             return Riffle();
         }
-        if (shuffleType == 3)
+        if (typeOfShuffle == 3)
         {
             return true;
         }
@@ -122,12 +121,13 @@ public static class Pack
         return false;
     }
 
+    // Shares name with other Deal method to integrate into external software as per brief document
     /// <summary>
     /// Returns the Card on the top of the pack. If pack is empty a Card{null} will be returned. Usages should be prepared
     /// for null types or should check size of pack using CardsRemaining() before using.
     /// </summary>
     /// <returns>Card or Card{null}</returns>
-    public static Card? Deal()
+    public static Card? DealCard()
     {
         if (CardsRemaining() <= 0)
         {
@@ -147,6 +147,7 @@ public static class Pack
         return null;
     }
 
+    // Shares name with other Deal method to integrate into external software as per brief document
     /// <summary>
     /// Deals a number of cards from the top of the pack. If not enough cards in the pack List of Cards will contain
     /// Card{null}. Usages should be prepared for null types or should check the size of the pack using CardsRemaining()
@@ -233,5 +234,26 @@ public static class Pack
         }
         // If there are no spaces to put the card
         PackFullException();
+    }
+
+    // ADDITIONAL METHOD
+    /// <summary>
+    /// Adds a list of cards to the pack with the last card in the list being placed towards the top of the pack
+    /// </summary>
+    /// <param name="cards">List Card - List containing cards to be added to the pack</param>
+    public static void AddCard(List<Card> cards)
+    {
+        try
+        {
+            foreach (Card card in cards)
+            {
+                AddCard(card);
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+        
     }
 }

@@ -12,7 +12,7 @@ public static class Testing
         // Try block to catch any empty pack exceptions thrown
         try
         {
-            player1.Hand.Add(Pack.Deal());
+            player1.Hand.Add(Pack.DealCard());
             player1.Hand.AddRange(Pack.DealCard(numberToDeal));
         }
         catch (Exception e)
@@ -41,6 +41,7 @@ public static class Testing
         {
             Console.WriteLine(e);
         }
+        // No exceptions can be thrown from these method calls so no need to place within the try block
         Console.WriteLine(Pack.ShuffleCardPack(3));
         Console.WriteLine(Pack.ShuffleCardPack(4));
     }
